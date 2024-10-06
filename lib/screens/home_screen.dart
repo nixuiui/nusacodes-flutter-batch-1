@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_nusacodes/screens/counter_screen.dart';
+import 'package:flutter_nusacodes/consts/app_route.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,16 +31,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: FilledButton(
           onPressed: () async {
-            final result = await Navigator.push(
+            final result = await Navigator.pushNamed(
               context, 
-              MaterialPageRoute(builder: (context) => CounterScreen(
-                initialCounter: initialCounter,
-              ))
+              AppRoute.counterScreen, 
+              arguments: initialCounter
             );
 
             if(result != null) {
               setState(() {
-                initialCounter = result;
+                initialCounter = result as int;
               });
             }
           }, 

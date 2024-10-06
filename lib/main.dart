@@ -1,6 +1,9 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_nusacodes/consts/app_route.dart';
 import 'package:flutter_nusacodes/providers/counter_model.dart';
+import 'package:flutter_nusacodes/screens/counter_screen.dart';
+import 'package:flutter_nusacodes/screens/home_screen.dart';
 import 'package:flutter_nusacodes/screens/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +57,15 @@ class MyApp extends StatelessWidget {
           // To use the Playground font, add GoogleFonts package and uncomment
           // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
-        home: const SplashScreen(),
+        initialRoute: AppRoute.splashScreen,
+        routes: {
+          AppRoute.splashScreen: (context) => const SplashScreen(),
+          AppRoute.homeScreen: (context) => const HomeScreen(),
+          AppRoute.counterScreen: (context) {
+            final arguments = ModalRoute.of(context)!.settings.arguments as int;
+            return CounterScreen(initialCounter: arguments);
+          },
+        },
       ),
     );
   }

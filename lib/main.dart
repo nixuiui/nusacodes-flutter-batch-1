@@ -5,6 +5,7 @@ import 'package:flutter_nusacodes/providers/counter_model.dart';
 import 'package:flutter_nusacodes/screens/counter_screen.dart';
 import 'package:flutter_nusacodes/screens/home/home_screen.dart';
 import 'package:flutter_nusacodes/screens/login_screen.dart';
+import 'package:flutter_nusacodes/screens/register_screen.dart';
 import 'package:flutter_nusacodes/screens/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
           AppRoute.splashScreen: (context) => const SplashScreen(),
           AppRoute.homeScreen: (context) => const HomeScreen(),
           AppRoute.loginScreen: (context) => const LoginScreen(),
+          AppRoute.registerScreen: (context) => const RegisterScreen(),
           AppRoute.counterScreen: (context) {
             final arguments = ModalRoute.of(context)!.settings.arguments as int;
             return CounterScreen(initialCounter: arguments);

@@ -10,7 +10,13 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:provider/provider.dart';
 
 class CounterScreen extends StatefulWidget {
-  const CounterScreen({super.key});
+  
+  final int initialCounter;
+  
+  const CounterScreen({
+    super.key,
+    required this.initialCounter
+  });
 
   @override
   State<CounterScreen> createState() => _CounterScreenState();
@@ -18,9 +24,18 @@ class CounterScreen extends StatefulWidget {
 
 class _CounterScreenState extends State<CounterScreen> {
 
-  final controller = CounterController();
-  final counterBloc = CounterBloc();
-  final counterCubit = CounterCubit();
+  late final CounterController controller;
+  late final CounterBloc counterBloc;
+  late final CounterCubit counterCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CounterController(widget.initialCounter);
+    counterBloc = CounterBloc(widget.initialCounter);
+    counterCubit = CounterCubit(widget.initialCounter);
+    context.read<CounterModel>().setCounter(widget.initialCounter);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,48 +44,64 @@ class _CounterScreenState extends State<CounterScreen> {
         title: const Text('Counter'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Obx(() => Text(
-              "Get: ${controller.counter.value}",
-              style: const TextStyle(
-                fontSize: 40,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(() => Text(
+                "Get: ${controller.counter.value}",
+                style: const TextStyle(
+                  fontSize: 40,
+                ),
+              )),
+              Consumer<CounterModel>(
+                builder: (context, state, child) {
+                  return Text(
+                    "Provider: ${state.counter}",
+                    style: const TextStyle(
+                      fontSize: 40,
+                    ),
+                  );
+                }
               ),
-            )),
-            Consumer<CounterModel>(
-              builder: (context, state, child) {
-                return Text(
-                  "Provider: ${state.counter}",
-                  style: const TextStyle(
-                    fontSize: 40,
-                  ),
-                );
-              }
-            ),
-            BlocBuilder<CounterCubit, CounterState>(
-              bloc: counterCubit,
-              builder: (context, state) {
-                return Text(
-                  "Cubit: ${state.counter}",
-                  style: const TextStyle(
-                    fontSize: 40,
-                  ),
-                );
-              }
-            ),
-            BlocBuilder<CounterBloc, CounterState>(
-              bloc: counterBloc,
-              builder: (context, state) {
-                return Text(
-                  "Bloc: ${state.counter}",
-                  style: const TextStyle(
-                    fontSize: 40,
-                  ),
-                );
-              }
-            ),
-          ],
+              BlocBuilder<CounterCubit, CounterState>(
+                bloc: counterCubit,
+                builder: (context, state) {
+                  return Text(
+                    "Cubit: ${state.counter}",
+                    style: const TextStyle(
+                      fontSize: 40,
+                    ),
+                  );
+                }
+              ),
+              BlocBuilder<CounterBloc, CounterState>(
+                bloc: counterBloc,
+                builder: (context, state) {
+                  return Text(
+                    "Bloc: ${state.counter}",
+                    style: const TextStyle(
+                      fontSize: 40,
+                    ),
+                  );
+                }
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: () {
+                    Navigator.pop(
+                      context,
+                      counterBloc.state.counter
+                    );
+                  }, 
+                  child: const Text('Finish')
+                ),
+              )
+            ],
+          ),
         )
       ),
       floatingActionButton: FloatingActionButton(

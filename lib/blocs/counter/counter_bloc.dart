@@ -4,7 +4,11 @@ import 'package:flutter_nusacodes/blocs/counter/counter_state.dart';
 
 class CounterBloc extends Bloc<CounterEvent, CounterState> {
 
-  CounterBloc() : super(const CounterState(counter: 0)) {
+  CounterBloc(int initialCounter) : super(const CounterState(counter: 0)) {
+    emit(state.copyWith(
+      counter: initialCounter
+    ));
+
     on<IncrementEvent>((event, emit) {
       emit(state.copyWith(
         counter: state.counter + 1,

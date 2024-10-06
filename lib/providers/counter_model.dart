@@ -5,6 +5,10 @@ class CounterModel extends ChangeNotifier {
 
   int get counter => _counter;
 
+  void setCounter(int number) {
+    _counter = number;
+  }
+
   void increment() {
     _counter++;
     notifyListeners();

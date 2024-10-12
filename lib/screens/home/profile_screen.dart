@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_state.dart';
+import 'package:flutter_nusacodes/consts/app_route.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -30,7 +31,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
-            onTap: () {},
+            onTap: () async {
+              await context.read<AuthenticationCubit>().logout();
+              if(context.mounted) {
+                Navigator.pushReplacementNamed(context, AppRoute.loginScreen);
+              }
+            },
           ),
         ],
       ),

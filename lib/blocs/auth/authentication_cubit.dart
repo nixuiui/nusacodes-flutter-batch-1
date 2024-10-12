@@ -32,4 +32,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  Future<void> logout() async {
+    // TODO: remove access token from local storage
+  }
+
 }

@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
 import 'package:flutter_nusacodes/consts/app_route.dart';
-import 'package:flutter_nusacodes/providers/counter_model.dart';
 import 'package:flutter_nusacodes/screens/counter_screen.dart';
 import 'package:flutter_nusacodes/screens/home/home_screen.dart';
 import 'package:flutter_nusacodes/screens/login_screen.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_nusacodes/screens/order_summary_screen.dart';
 import 'package:flutter_nusacodes/screens/register_screen.dart';
 import 'package:flutter_nusacodes/screens/splash_screen.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => CounterModel())
+        BlocProvider(create: (context) => AuthenticationCubit()),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',

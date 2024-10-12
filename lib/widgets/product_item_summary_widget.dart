@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nusacodes/models/order_model.dart';
 
 class ProductItemSummaryWidget extends StatelessWidget {
+
+  final OrderItem orderItem;
+
   const ProductItemSummaryWidget({
     super.key,
+    required this.orderItem
   });
 
   @override
@@ -22,11 +27,12 @@ class ProductItemSummaryWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Produk',
+                    orderItem.product?.name ?? '',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
+                  // TODO: format rupiah
                   Text(
-                    '2x Rp 20.000',
+                    '${orderItem.quantity}x Rp ${orderItem.pricePerItem}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],

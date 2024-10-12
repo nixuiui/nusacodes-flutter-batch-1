@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nusacodes/blocs/order/order_cubit.dart';
+import 'package:flutter_nusacodes/blocs/order/order_state.dart';
 import 'package:flutter_nusacodes/blocs/product/product_cubit.dart';
 import 'package:flutter_nusacodes/blocs/product/product_state.dart';
 import 'package:flutter_nusacodes/consts/app_route.dart';
@@ -39,6 +41,7 @@ class _PosScreenState extends State<PosScreen> {
                   separatorBuilder: (context, index) => const SizedBox(height: 12), 
                   itemBuilder: (context, index) => ProductItemWidget(
                     product: state.products![index],
+                    onAddProduct: context.read<OrderCubit>().addProduct,
                   ), 
                 ),
               );
@@ -65,28 +68,32 @@ class _PosScreenState extends State<PosScreen> {
             color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(16)
           ),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: BlocBuilder<OrderCubit, OrderState>(
+            builder: (context, state) {
+              return Row(
                 children: [
-                  Text(
-                    '16 Produk dipilih',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${state.order?.items?.length ?? 0} Produk dipilih',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer
+                        ),
+                      ),
+                      Text(
+                        'Rp 320.000',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Rp 320.000',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer
-                    ),
-                  ),
+                  const Spacer(),
+                  const Icon(Icons.arrow_forward),
                 ],
-              ),
-              const Spacer(),
-              const Icon(Icons.arrow_forward),
-            ],
+              );
+            }
           ),
         ),
       ),

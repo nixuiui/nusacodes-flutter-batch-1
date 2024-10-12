@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
+import 'package:flutter_nusacodes/blocs/order/order_cubit.dart';
 import 'package:flutter_nusacodes/consts/app_route.dart';
 import 'package:flutter_nusacodes/screens/counter_screen.dart';
 import 'package:flutter_nusacodes/screens/home/home_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthenticationCubit()),
+        BlocProvider(create: (context) => OrderCubit()),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',

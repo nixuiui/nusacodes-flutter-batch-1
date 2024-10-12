@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nusacodes/models/product_model.dart';
 
 class ProductItemWidget extends StatelessWidget {
+  final ProductModel product;
+  
   const ProductItemWidget({
     super.key,
+    required this.product,
   });
 
   @override
@@ -22,15 +26,15 @@ class ProductItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Produk',
+                    product.name ?? '',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
-                    'Rp 20.000',
+                    product.price?.toString() ?? '',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    'Qty: 2 unit',
+                    'Stok: ${product.stock}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],

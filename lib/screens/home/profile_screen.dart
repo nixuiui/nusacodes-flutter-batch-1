@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
+import 'package:flutter_nusacodes/blocs/auth/authentication_state.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -42,15 +45,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         const SizedBox(width: 16),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'John Doe',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const Text('johndoe@gmail.com'),
-            ],
+          child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.user?.name ?? '',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(state.user?.email ?? ''),
+                ],
+              );
+            }
           ),
         ),
       ],

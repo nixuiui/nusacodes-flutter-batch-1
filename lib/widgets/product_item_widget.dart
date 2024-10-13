@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nusacodes/models/product_model.dart';
 
 class ProductItemWidget extends StatelessWidget {
-  final ProductModel product;
-  final Function(ProductModel)? onAddProduct;
+  final Product product;
+  final Function(Product)? onAddProduct;
   
   const ProductItemWidget({
     super.key,

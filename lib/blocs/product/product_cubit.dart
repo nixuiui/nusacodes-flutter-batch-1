@@ -1,45 +1,28 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/product/product_state.dart';
-import 'package:flutter_nusacodes/models/product_model.dart';
+import 'package:flutter_nusacodes/repositories/product_repository.dart';
 
 class ProductCubit extends Cubit<ProductState> {
+
+  final productRepository = ProductRepository();
 
   ProductCubit() : super(const ProductState());
 
   Future<void> loadData() async {
     emit(state.copyWith(loading: true));
     
-    await Future.delayed(const Duration(seconds: 1));
-    // TODO: Hit enpoint GET data product
-
-    final products = [
-      ProductModel(
-        id: 1,
-        name: "Asus ZenBook 14",
-        description: "Description for Asus ZenBook 14",
-        price: 10000000,
-        stock: 16
-      ),
-      ProductModel(
-        id: 2,
-        name: "Asus ZenBook 10",
-        description: "Description for Asus ZenBook 10",
-        price: 8000000,
-        stock: 32
-      ),
-      ProductModel(
-        id: 3,
-        name: "iPhone 10",
-        description: "Description for Asus iPhone 10",
-        price: 6000000,
-        stock: 32
-      ),
-    ];
-
-    emit(state.copyWith(
-      loading: false,
-      products: products
-    ));
+    try {
+      final response = await productRepository.getList();
+      emit(state.copyWith(
+        loading: false,
+        products: response
+      ));
+    } catch (e) {
+      print('loadData() -> $e');
+      emit(state.copyWith(
+        loading: false,
+      ));
+    }
   }
 
 }

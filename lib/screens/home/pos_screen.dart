@@ -37,7 +37,12 @@ class _PosScreenState extends State<PosScreen> {
               return RefreshIndicator(
                 onRefresh: context.read<ProductCubit>().loadData,
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.only(
+                    top: 16,
+                    left: 16,
+                    right: 16,
+                    bottom: 200
+                  ),
                   itemCount: state.products?.length ?? 0,
                   separatorBuilder: (context, index) => const SizedBox(height: 12), 
                   itemBuilder: (context, index) => ProductItemWidget(

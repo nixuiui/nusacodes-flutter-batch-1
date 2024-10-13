@@ -8,7 +8,6 @@ class NetworkService {
   final requestTimeOut = 30;
   
   late Dio dio;
-  late SharedPreferences prefs;
 
   NetworkService() {
     final baseOptions = BaseOptions(
@@ -21,14 +20,11 @@ class NetworkService {
 
     dio = Dio(baseOptions);
     dio.interceptors.add(LoggingInterceptor());
-    initPref();
   }
 
-  void initPref() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
-  Map<String, dynamic> headersRequest() {
+  // TODO: create singleton for SharedPreferences
+  Future<Map<String, dynamic>> headersRequest() async {
+    final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     return {
       'Content-Type': 'application/json',
@@ -41,10 +37,11 @@ class NetworkService {
     required String url,
     Map<String, dynamic>? parameters,
   }) async {
+    final header = await headersRequest();
     return await _safeFetch(() => dio.get(
       url,
       queryParameters: parameters ?? {},
-      options: Options(headers: headersRequest()),
+      options: Options(headers: header),
     ));
   }
 
@@ -53,10 +50,11 @@ class NetworkService {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
   }) async {
+    final header = await headersRequest();
     return await _safeFetch(() => dio.post(
       url,
       data: data,
-      options: Options(headers: headersRequest()),
+      options: Options(headers: header),
       queryParameters: queryParameters
     ));
   }
@@ -66,10 +64,11 @@ class NetworkService {
     required Map<String, dynamic> data,
     Map<String, dynamic>? queryParameters,
   }) async {
+    final header = await headersRequest();
     return await _safeFetch(() => dio.put(
       url,
       data: data,
-      options: Options(headers: headersRequest()),
+      options: Options(headers: header),
       queryParameters: queryParameters,
     ));
   }
@@ -79,10 +78,11 @@ class NetworkService {
     required Map<String, dynamic> data,
     Map<String, dynamic>? queryParameters,
   }) async {
+    final header = await headersRequest();
     return await _safeFetch(() => dio.patch(
       url,
       data: data,
-      options: Options(headers: headersRequest()),
+      options: Options(headers: header),
       queryParameters: queryParameters,
     ));
   }
@@ -92,11 +92,12 @@ class NetworkService {
     Map<String, dynamic>?  data,
     Map<String, dynamic>? parameters,
   }) async {
+    final header = await headersRequest();
     return await _safeFetch(() => dio.delete(
       url,
       data: data,
       queryParameters: parameters,
-      options: Options(headers: headersRequest()),
+      options: Options(headers: header),
     ));
   }
 
@@ -118,7 +119,7 @@ class NetworkService {
           throw NetworkException();
       }
     } catch (e) {
-      throw NetworkException();
+      throw NetworkException(message: e.toString());
     }
   }
 }

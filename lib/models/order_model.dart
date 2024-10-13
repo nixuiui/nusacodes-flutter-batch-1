@@ -39,7 +39,7 @@ class OrderItem {
     final int? productId;
     final int? quantity;
     final double? pricePerItem;
-    final ProductModel? product;
+    final Product? product;
 
     OrderItem({
         this.productId,

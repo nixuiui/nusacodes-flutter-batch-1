@@ -3,7 +3,7 @@ import 'package:flutter_nusacodes/models/product_model.dart';
 
 class ProductState extends Equatable {
 
-  final List<ProductModel>? products;
+  final List<Product>? products;
   final bool loading;
 
   const ProductState({
@@ -12,7 +12,7 @@ class ProductState extends Equatable {
   });
 
   ProductState copyWith({
-    List<ProductModel>? products,
+    List<Product>? products,
     bool? loading,
   }) => ProductState(
     products: products ?? this.products,

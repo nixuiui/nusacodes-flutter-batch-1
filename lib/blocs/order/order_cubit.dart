@@ -7,7 +7,7 @@ class OrderCubit extends Cubit<OrderState> {
 
   OrderCubit() : super(const OrderState());
 
-  void addProduct(ProductModel product) {
+  void addProduct(Product product) {
     final orderItem = OrderItem(
       productId: product.id,
       quantity: 1,

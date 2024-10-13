@@ -1,11 +1,11 @@
-class ProductModel {
+class Product {
     final int? id;
     final String? name;
     final String? description;
     final double? price;
     final int? stock;
 
-    ProductModel({
+    Product({
         this.id,
         this.name,
         this.description,
@@ -13,11 +13,11 @@ class ProductModel {
         this.stock,
     });
 
-    factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        price: json["price"],
+        price: double.tryParse(json["price"]),
         stock: json["stock"],
     );
 

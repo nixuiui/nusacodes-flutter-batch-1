@@ -21,11 +21,9 @@ class OrderCubit extends Cubit<OrderState> {
       );
       emit(state.copyWith(order: newOrder));
     } else {
-      final order = state.order;
-      order?.items?.add(orderItem);
-      emit(state.copyWith(
-        order: order
-      ));
+      final updatedItems = List<OrderItem>.from(state.order?.items ?? [])..add(orderItem);
+      final updatedOrder = state.order!.copyWith(items: updatedItems);
+      emit(state.copyWith(order: updatedOrder));
     }
 
     print('state.order: ${state.order?.items?.length ?? 0}');

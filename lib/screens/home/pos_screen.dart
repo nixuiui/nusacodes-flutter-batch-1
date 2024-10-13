@@ -5,6 +5,7 @@ import 'package:flutter_nusacodes/blocs/order/order_state.dart';
 import 'package:flutter_nusacodes/blocs/product/product_cubit.dart';
 import 'package:flutter_nusacodes/blocs/product/product_state.dart';
 import 'package:flutter_nusacodes/consts/app_route.dart';
+import 'package:flutter_nusacodes/utils/helper.dart';
 import 'package:flutter_nusacodes/widgets/product_item_widget.dart';
 
 class PosScreen extends StatefulWidget {
@@ -82,7 +83,7 @@ class _PosScreenState extends State<PosScreen> {
                         ),
                       ),
                       Text(
-                        'Rp 320.000',
+                        formatRupiah(state.order?.totalPrice),
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimaryContainer
                         ),

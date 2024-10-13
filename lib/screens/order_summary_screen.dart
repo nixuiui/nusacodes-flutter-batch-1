@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/order/order_cubit.dart';
 import 'package:flutter_nusacodes/blocs/order/order_state.dart';
+import 'package:flutter_nusacodes/utils/helper.dart';
 import 'package:flutter_nusacodes/widgets/product_item_summary_widget.dart';
 
 class OrderSummaryScreen extends StatefulWidget {
@@ -36,11 +37,13 @@ class _OrderSummaryScreenState extends State<OrderSummaryScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            // TODO: total order
-            Text(
-              'Total Rp 320.000',
-              style: Theme.of(context).textTheme.titleMedium,
+            BlocBuilder<OrderCubit, OrderState>(
+              builder: (context, state) {
+                return Text(
+                  'Total ${formatRupiah(state.order?.totalPrice)}',
+                  style: Theme.of(context).textTheme.titleMedium,
+                );
+              }
             ),
             const SizedBox(height: 8),
             SizedBox(

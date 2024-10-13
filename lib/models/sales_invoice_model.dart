@@ -4,7 +4,7 @@ import 'package:flutter_nusacodes/models/sales_invoice_item_model.dart';
 class SalesInvoiceModel {
     final int? id;
     final int? userId;
-    final String? totalPrice;
+    final int? totalPrice;
     final DateTime? saleDate;
     final List<SalesInvoiceItem>? items;
     final List<Payment>? payments;

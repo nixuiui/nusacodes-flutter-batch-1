@@ -52,7 +52,7 @@ class OrderItem {
 
     Map<String, dynamic> toJson() => {
         "product_id": productId,
-        "quantity": quantity,
+        "qty": quantity,
         "price_per_item": pricePerItem,
     };
 }

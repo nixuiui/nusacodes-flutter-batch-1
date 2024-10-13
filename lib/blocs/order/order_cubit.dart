@@ -2,8 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/order/order_state.dart';
 import 'package:flutter_nusacodes/models/order_model.dart';
 import 'package:flutter_nusacodes/models/product_model.dart';
+import 'package:flutter_nusacodes/repositories/sales_repository.dart';
 
 class OrderCubit extends Cubit<OrderState> {
+
+  final salesRepository = SalesRepository();
 
   OrderCubit() : super(const OrderState());
 
@@ -36,8 +39,27 @@ class OrderCubit extends Cubit<OrderState> {
 
   }
 
-  void setPaymentMethod(String paymentMethod) {
+  Future<void> createInvoice({
+    required int paymentAmount,
+    required String paymentMethod,
+  }) async {
+    emit(state.copyWith(status: CreateInvoiceStatus.loading));
+    try {
+      final order = OrderModel(
+        items: state.order?.items,
+        paymentAmount: paymentAmount,
+        paymentMethod: paymentMethod,
+      );
 
+      await salesRepository.postCreateInvoice(order);
+      print('aaaa');
+      emit(state.copyWith(status: CreateInvoiceStatus.success));
+    } catch (e) {
+      print('bbbb: $e');
+      emit(state.copyWith(
+        status: CreateInvoiceStatus.failed,
+      ));
+    }
   }
 
 }

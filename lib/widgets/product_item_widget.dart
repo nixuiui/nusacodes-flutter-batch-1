@@ -45,6 +45,7 @@ class ProductItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
+              // TODO: create plus/min qty
               // Row(
               //   children: [
               //     IconButton.outlined(

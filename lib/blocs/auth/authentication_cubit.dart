@@ -32,16 +32,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   Future<bool> checkLogin() async {
-    print('checkLogin:');
     final prefs = await SharedPreferences.getInstance();
-    print('checkLogin: 2');
     final token = prefs.getString('token');
-    print('checkLogin: token');
     return token?.isNotEmpty ?? false;
   }
 
   Future<void> logout() async {
-    // TODO: remove access token from local storage
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
   }
 
 }

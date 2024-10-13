@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
 import 'package:flutter_nusacodes/consts/app_route.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,9 +14,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    // TODO: Check login status
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, AppRoute.loginScreen);
+    context.read<AuthenticationCubit>().checkLogin().then((loggedIn) {
+      if(loggedIn) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacementNamed(context, AppRoute.homeScreen);
+        });
+      } else {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacementNamed(context, AppRoute.loginScreen);
+        });
+      }
     });
     super.initState();
   }

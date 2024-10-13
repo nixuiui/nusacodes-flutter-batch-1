@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_state.dart';
-import 'package:flutter_nusacodes/models/user_model.dart';
+import 'package:flutter_nusacodes/repositories/authentication_repository.dart';
+import 'package:flutter_nusacodes/utils/network_exception.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
+
+  final authenticationRepository = AuthenticationRepository();
 
   AuthenticationCubit() : super(const AuthenticationState());
 
@@ -12,24 +16,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       errorMessage: ''
     ));
     await Future.delayed(const Duration(seconds: 1));
-    
-    // TODO: Hit enpoint POST /login
-    if(email == 'admin@gmail.com' && password == 'admin') {
-      final user = User(
-        name: 'Admin',
-        email: email
-      );
 
+    try {
+      final response = await authenticationRepository.login(email, password);
       emit(state.copyWith(
         status: LoginStatus.success,
-        user: user
+        user: response
       ));
-    } else {
+    } on NetworkException catch (e) {
       emit(state.copyWith(
         status: LoginStatus.failed,
-        errorMessage: 'Email & Password tidak tepat'
+        errorMessage: "$e",
       ));
     }
+  }
+
+  Future<bool> checkLogin() async {
+    print('checkLogin:');
+    final prefs = await SharedPreferences.getInstance();
+    print('checkLogin: 2');
+    final token = prefs.getString('token');
+    print('checkLogin: token');
+    return token?.isNotEmpty ?? false;
   }
 
   Future<void> logout() async {

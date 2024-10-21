@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_nusacodes/local_storages/auth_storage.dart';
 import 'package:flutter_nusacodes/utils/loggin_iterceptor.dart';
 import 'package:flutter_nusacodes/utils/network_exception.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkService {
 
   final requestTimeOut = 30;
   
   late Dio dio;
+  late final AuthStorage authStorage;
 
   NetworkService() {
     final baseOptions = BaseOptions(
@@ -22,10 +23,8 @@ class NetworkService {
     dio.interceptors.add(LoggingInterceptor());
   }
 
-  // TODO: create singleton for SharedPreferences
   Future<Map<String, dynamic>> headersRequest() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = authStorage.token;
     return {
       'Content-Type': 'application/json',
       'Authorization': "Bearer $token",

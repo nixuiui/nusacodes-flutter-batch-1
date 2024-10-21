@@ -4,7 +4,9 @@ import 'package:flutter_nusacodes/utils/network_service.dart';
 
 class SalesRepository {
 
-  final network = NetworkService();
+  late final NetworkService network;
+
+  SalesRepository(this.network);
 
   Future<SalesInvoiceModel> postCreateInvoice(OrderModel order) async {
     final response = await network.post(

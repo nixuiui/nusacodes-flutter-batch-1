@@ -7,8 +7,9 @@ import 'package:flutter_nusacodes/injector.dart';
 import 'package:flutter_nusacodes/screens/todo_screen.dart';
 import 'package:get/get.dart';
 
-void main() {
-  singleton();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await singleton();
   runApp(const MyApp());
 }
 
@@ -18,8 +19,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthenticationCubit()),
-        BlocProvider(create: (context) => OrderCubit()),
+        BlocProvider(create: (context) => AuthenticationCubit(
+          Get.find(),
+          Get.find(),
+        )),
+        BlocProvider(create: (context) => OrderCubit(
+          Get.find(),
+        )),
       ],
       child: GetMaterialApp(
         title: 'Flutter Demo',

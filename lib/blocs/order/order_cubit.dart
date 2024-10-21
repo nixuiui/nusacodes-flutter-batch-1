@@ -6,9 +6,11 @@ import 'package:flutter_nusacodes/repositories/sales_repository.dart';
 
 class OrderCubit extends Cubit<OrderState> {
 
-  final salesRepository = SalesRepository();
+  late final SalesRepository salesRepository;
 
-  OrderCubit() : super(const OrderState());
+  OrderCubit(
+    this.salesRepository
+  ) : super(const OrderState());
 
   void addProduct(Product product) {
     final orderItem = OrderItem(

@@ -1,10 +1,13 @@
+import 'package:flutter_nusacodes/local_storages/auth_storage.dart';
 import 'package:flutter_nusacodes/models/user_model.dart';
 import 'package:flutter_nusacodes/utils/network_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationRepository {
 
-  final network = NetworkService();
+  late final NetworkService network;
+  late final AuthStorage authStorage;
+
+  AuthenticationRepository(this.network, this.authStorage);
 
   Future<User> login(String email, String password) async {
     final response = await network.post(
@@ -15,8 +18,7 @@ class AuthenticationRepository {
       }
     );
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', response.data['data']['access_token']);
+    await authStorage.setToken(response.data['data']['access_token']);
     
     return User.fromJson(response.data['data']['user']);
   }

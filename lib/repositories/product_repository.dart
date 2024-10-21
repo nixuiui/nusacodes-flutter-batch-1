@@ -3,7 +3,11 @@ import 'package:flutter_nusacodes/utils/network_service.dart';
 
 class ProductRepository {
 
-  final network = NetworkService();
+  late final NetworkService network;
+
+  ProductRepository({
+    required this.network
+  });
 
   Future<List<Product>> getList() async {
     final response = await network.get(

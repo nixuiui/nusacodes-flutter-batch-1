@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_state.dart';
-import 'package:flutter_nusacodes/local_storages/auth_storage.dart';
-import 'package:flutter_nusacodes/repositories/authentication_repository.dart';
+import 'package:flutter_nusacodes/data_resources/local_storage/auth_storage.dart';
+import 'package:flutter_nusacodes/data_resources/network/authentication_repository.dart';
 import 'package:flutter_nusacodes/utils/network_exception.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/product/product_state.dart';
-import 'package:flutter_nusacodes/repositories/product_repository.dart';
+import 'package:flutter_nusacodes/data_resources/network/product_repository.dart';
 import 'package:get/get.dart';
 
 class ProductCubit extends Cubit<ProductState> {

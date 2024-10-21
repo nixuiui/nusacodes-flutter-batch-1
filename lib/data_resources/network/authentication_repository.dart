@@ -1,4 +1,4 @@
-import 'package:flutter_nusacodes/local_storages/auth_storage.dart';
+import 'package:flutter_nusacodes/data_resources/local_storage/auth_storage.dart';
 import 'package:flutter_nusacodes/models/user_model.dart';
 import 'package:flutter_nusacodes/utils/network_service.dart';
 

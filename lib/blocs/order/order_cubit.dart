@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/order/order_state.dart';
+import 'package:flutter_nusacodes/data_resources/network/sales_repository.dart';
 import 'package:flutter_nusacodes/models/order_model.dart';
 import 'package:flutter_nusacodes/models/product_model.dart';
-import 'package:flutter_nusacodes/repositories/sales_repository.dart';
 
 class OrderCubit extends Cubit<OrderState> {
 

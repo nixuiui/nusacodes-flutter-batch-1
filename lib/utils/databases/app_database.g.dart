@@ -11,7 +11,7 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
+      'id', aliasedName, true,
       hasAutoIncrement: true,
       type: DriftSqlType.int,
       requiredDuringInsert: false,
@@ -60,7 +60,7 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Product(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}id']),
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name']),
       price: attachedDatabase.typeMapping
@@ -75,14 +75,16 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
 }
 
 class Product extends DataClass implements Insertable<Product> {
-  final int id;
+  final int? id;
   final String? name;
   final double? price;
-  const Product({required this.id, this.name, this.price});
+  const Product({this.id, this.name, this.price});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int>(id);
+    }
     if (!nullToAbsent || name != null) {
       map['name'] = Variable<String>(name);
     }
@@ -94,7 +96,7 @@ class Product extends DataClass implements Insertable<Product> {
 
   ProductsCompanion toCompanion(bool nullToAbsent) {
     return ProductsCompanion(
-      id: Value(id),
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       name: name == null && nullToAbsent ? const Value.absent() : Value(name),
       price:
           price == null && nullToAbsent ? const Value.absent() : Value(price),
@@ -105,7 +107,7 @@ class Product extends DataClass implements Insertable<Product> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Product(
-      id: serializer.fromJson<int>(json['id']),
+      id: serializer.fromJson<int?>(json['id']),
       name: serializer.fromJson<String?>(json['name']),
       price: serializer.fromJson<double?>(json['price']),
     );
@@ -114,18 +116,18 @@ class Product extends DataClass implements Insertable<Product> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
+      'id': serializer.toJson<int?>(id),
       'name': serializer.toJson<String?>(name),
       'price': serializer.toJson<double?>(price),
     };
   }
 
   Product copyWith(
-          {int? id,
+          {Value<int?> id = const Value.absent(),
           Value<String?> name = const Value.absent(),
           Value<double?> price = const Value.absent()}) =>
       Product(
-        id: id ?? this.id,
+        id: id.present ? id.value : this.id,
         name: name.present ? name.value : this.name,
         price: price.present ? price.value : this.price,
       );
@@ -159,7 +161,7 @@ class Product extends DataClass implements Insertable<Product> {
 }
 
 class ProductsCompanion extends UpdateCompanion<Product> {
-  final Value<int> id;
+  final Value<int?> id;
   final Value<String?> name;
   final Value<double?> price;
   const ProductsCompanion({
@@ -185,7 +187,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
   }
 
   ProductsCompanion copyWith(
-      {Value<int>? id, Value<String?>? name, Value<double?>? price}) {
+      {Value<int?>? id, Value<String?>? name, Value<double?>? price}) {
     return ProductsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -231,12 +233,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 }
 
 typedef $$ProductsTableCreateCompanionBuilder = ProductsCompanion Function({
-  Value<int> id,
+  Value<int?> id,
   Value<String?> name,
   Value<double?> price,
 });
 typedef $$ProductsTableUpdateCompanionBuilder = ProductsCompanion Function({
-  Value<int> id,
+  Value<int?> id,
   Value<String?> name,
   Value<double?> price,
 });
@@ -321,7 +323,7 @@ class $$ProductsTableTableManager extends RootTableManager<
           createComputedFieldComposer: () =>
               $$ProductsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             Value<String?> name = const Value.absent(),
             Value<double?> price = const Value.absent(),
           }) =>
@@ -331,7 +333,7 @@ class $$ProductsTableTableManager extends RootTableManager<
             price: price,
           ),
           createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
+            Value<int?> id = const Value.absent(),
             Value<String?> name = const Value.absent(),
             Value<double?> price = const Value.absent(),
           }) =>

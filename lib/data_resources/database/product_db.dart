@@ -1,4 +1,4 @@
-import 'package:flutter_nusacodes/databases/app_database.dart';
+import 'package:flutter_nusacodes/utils/databases/app_database.dart';
 
 class ProductDb {
 
@@ -19,6 +19,8 @@ class ProductDb {
   Future<List<Product>> getListProducts() async {
     return await db.select(db.products).get();
   }
+
+  Stream<List<Product>> watchListProducts() => db.select(db.products).watch();
 
   Future<void> updateProduct(Product data, int id) async {
     await (db.update(db.products)..where((tbl) => tbl.id.equals(id))).write(data);

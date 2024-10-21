@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_nusacodes/local_storages/auth_storage.dart';
+import 'package:flutter_nusacodes/data_resources/local_storage/auth_storage.dart';
 import 'package:flutter_nusacodes/utils/loggin_iterceptor.dart';
 import 'package:flutter_nusacodes/utils/network_exception.dart';
 

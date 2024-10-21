@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
 import 'package:flutter_nusacodes/blocs/order/order_cubit.dart';
 import 'package:flutter_nusacodes/injector.dart';
-import 'package:flutter_nusacodes/screens/todo_screen.dart';
+import 'package:flutter_nusacodes/screens/product_screen.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
           // To use the Playground font, add GoogleFonts package and uncomment
           // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
-        home: const TodoScreen(),
+        home: const ProductScreen(),
         // initialRoute: AppRoute.splashScreen,
         // routes: {
         //   AppRoute.splashScreen: (context) => const SplashScreen(),

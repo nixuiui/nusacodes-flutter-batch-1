@@ -3,13 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_nusacodes/blocs/auth/authentication_cubit.dart';
 import 'package:flutter_nusacodes/blocs/order/order_cubit.dart';
-import 'package:flutter_nusacodes/consts/app_route.dart';
-import 'package:flutter_nusacodes/screens/counter_screen.dart';
-import 'package:flutter_nusacodes/screens/home/home_screen.dart';
-import 'package:flutter_nusacodes/screens/login_screen.dart';
-import 'package:flutter_nusacodes/screens/order_summary_screen.dart';
-import 'package:flutter_nusacodes/screens/register_screen.dart';
-import 'package:flutter_nusacodes/screens/splash_screen.dart';
+import 'package:flutter_nusacodes/screens/animations/tween_animation.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -62,18 +56,19 @@ class MyApp extends StatelessWidget {
           // To use the Playground font, add GoogleFonts package and uncomment
           // fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
-        initialRoute: AppRoute.splashScreen,
-        routes: {
-          AppRoute.splashScreen: (context) => const SplashScreen(),
-          AppRoute.homeScreen: (context) => const HomeScreen(),
-          AppRoute.loginScreen: (context) => const LoginScreen(),
-          AppRoute.registerScreen: (context) => const RegisterScreen(),
-          AppRoute.orderSummaryScreen: (context) => const OrderSummaryScreen(),
-          AppRoute.counterScreen: (context) {
-            final arguments = ModalRoute.of(context)!.settings.arguments as int;
-            return CounterScreen(initialCounter: arguments);
-          },
-        },
+        home: const TweenAnimationScreen(),
+        // initialRoute: AppRoute.splashScreen,
+        // routes: {
+        //   AppRoute.splashScreen: (context) => const SplashScreen(),
+        //   AppRoute.homeScreen: (context) => const HomeScreen(),
+        //   AppRoute.loginScreen: (context) => const LoginScreen(),
+        //   AppRoute.registerScreen: (context) => const RegisterScreen(),
+        //   AppRoute.orderSummaryScreen: (context) => const OrderSummaryScreen(),
+        //   AppRoute.counterScreen: (context) {
+        //     final arguments = ModalRoute.of(context)!.settings.arguments as int;
+        //     return CounterScreen(initialCounter: arguments);
+        //   },
+        // },
       ),
     );
   }
